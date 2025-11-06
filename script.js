@@ -1,20 +1,23 @@
-// Add a subtle tilt effect on hover
+// Add a subtle tilt effect on hover (disabled on mobile)
 const letter = document.querySelector('.letter');
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-letter.addEventListener('mousemove', (event) => {
-    const rectangle = letter.getBoundingClientRect();
-    const x = event.clientX - rectangle.left;
-    const y = event.clientY - rectangle.top;
-    
-    const centerX = rectangle.width / 2;
-    const centerY = rectangle.height / 2;
-    
-    const rotateX = (y - centerY) / 40;
-    const rotateY = (centerX - x) / 40;
-    
-    letter.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-});
+if (!isMobile) {
+    letter.addEventListener('mousemove', (e) => {
+        const rect = letter.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 40;
+        const rotateY = (centerX - x) / 40;
+        
+        letter.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
 
-letter.addEventListener('mouseleave', () => {
-    letter.style.transform = 'perspective(1500px) rotateX(0) rotateY(0)';
-});
+    letter.addEventListener('mouseleave', () => {
+        letter.style.transform = 'perspective(1500px) rotateX(0) rotateY(0)';
+    });
+}
